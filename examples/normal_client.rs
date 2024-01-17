@@ -1,6 +1,6 @@
 use aria2_rs::{
     call::{AddUriCall, MultiCall},
-    Client, ConnectionMeta, SmallMap, SmallVec,
+    Client, ConnectionMeta, SmallVec,
 };
 
 const WS_RPC_ADDRESS: &str = "wss://TEST/jsonrpc";
@@ -20,7 +20,7 @@ async fn main() {
     let r = client
         .call(&AddUriCall {
             uris: SmallVec::from_iter(["http://example.org/file".to_string()]),
-            options: SmallMap::new(),
+            options: None,
         })
         .await
         .unwrap();
@@ -28,7 +28,7 @@ async fn main() {
 
     let add_uri = AddUriCall {
         uris: SmallVec::from_iter(["http://example.org/file".to_string()]),
-        options: SmallMap::new(),
+        options: None,
     };
     let mut multi = MultiCall::new();
     multi.push(add_uri);

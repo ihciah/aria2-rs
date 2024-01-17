@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use serde::{de::DeserializeOwned, ser::SerializeSeq as _, Deserialize, Serializer};
 use serde_json::Value;
 
-use crate::{SmallMap, SmallString, SmallVec};
+use crate::{options::TaskOptions, SmallString, SmallVec};
 
 type SerializeSeq = <serde_json::value::Serializer as serde::ser::Serializer>::SerializeSeq;
 type JsonError = serde_json::Error;
@@ -49,7 +49,7 @@ pub trait Call {
 
 pub struct AddUriCall {
     pub uris: SmallVec<String>,
-    pub options: SmallMap<String, String>,
+    pub options: Option<TaskOptions>,
 }
 
 impl Reply for AddUriCall {
@@ -71,14 +71,15 @@ impl Call for AddUriCall {
     ) -> Result<(), JsonError> {
         option!(token, serializer);
         serializer.serialize_element(&self.uris)?;
-        empty!(&self.options, serializer);
+        option!(&self.options, serializer);
         Ok(())
     }
 }
 
 pub struct AddTorrentCall<'a> {
     pub torrent: Cow<'a, [u8]>,
-    pub options: SmallMap<String, String>,
+    pub uris: SmallVec<Cow<'a, str>>,
+    pub options: Option<TaskOptions>,
 }
 
 impl<'a> Reply for AddTorrentCall<'a> {
@@ -95,18 +96,19 @@ impl<'a> Call for AddTorrentCall<'a> {
         token: Option<&str>,
     ) -> Result<(), JsonError> {
         use base64::{engine::general_purpose, Engine as _};
-        let encoded: String = general_purpose::STANDARD_NO_PAD.encode(&self.torrent);
+        let encoded: String = general_purpose::STANDARD.encode(&self.torrent);
 
         option!(token, serializer);
         serializer.serialize_element(&encoded)?;
-        empty!(&self.options, serializer);
+        serializer.serialize_element(&self.uris)?;
+        option!(&self.options, serializer);
         Ok(())
     }
 }
 
 pub struct AddMetalinkCall<'a> {
     pub metalink: Cow<'a, str>,
-    pub options: SmallMap<String, String>,
+    pub options: Option<TaskOptions>,
 }
 
 impl<'a> Reply for AddMetalinkCall<'a> {
@@ -124,7 +126,7 @@ impl<'a> Call for AddMetalinkCall<'a> {
     ) -> Result<(), JsonError> {
         option!(token, serializer);
         serializer.serialize_element(&self.metalink)?;
-        empty!(&self.options, serializer);
+        option!(&self.options, serializer);
         Ok(())
     }
 }

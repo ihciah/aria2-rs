@@ -1,6 +1,7 @@
 pub mod call;
 mod client;
 mod error;
+pub mod options;
 pub mod status;
 
 pub type SmallMap<K, V> = small_map::FxSmallMap<4, K, V>;

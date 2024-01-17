@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use aria2_rs::{call::AddUriCall, BatchClient, ConnectionMeta, SmallMap, SmallVec};
+use aria2_rs::{call::AddUriCall, BatchClient, ConnectionMeta, SmallVec};
 
 const WS_RPC_ADDRESS: &str = "wss://TEST/jsonrpc";
 const TOKEN: &str = "token:TEST";
@@ -18,18 +18,19 @@ async fn main() {
     .await
     .unwrap();
 
+    // The following 3 requests will be sent in one batch(multicall).
     let r = tokio::join!(
         client.call(AddUriCall {
             uris: SmallVec::from_iter(["http://example.org/file".to_string()]),
-            options: SmallMap::new(),
+            options: None,
         }),
         client.call(AddUriCall {
             uris: SmallVec::from_iter(["http://example.org/file".to_string()]),
-            options: SmallMap::new(),
+            options: None,
         }),
         client.call(AddUriCall {
             uris: SmallVec::from_iter(["http://example.org/file".to_string()]),
-            options: SmallMap::new(),
+            options: None,
         })
     );
     println!("response: {r:?}");

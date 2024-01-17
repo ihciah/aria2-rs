@@ -224,7 +224,7 @@ impl RawClient {
                 }
             }
             Err(e) => {
-                tracing::error!("parse response error: {e}");
+                tracing::error!("parse response error: {e}, origin text: {text}");
             }
         }
     }
@@ -373,7 +373,7 @@ impl BatchClient {
             }
 
             if !call_buffer.is_empty() {
-                tracing::info!("batch call: len = {len}", len = call_buffer.len());
+                tracing::debug!("batch call: len = {len}", len = call_buffer.len());
                 let mut multi_call = MultiCall {
                     calls: std::mem::take(&mut call_buffer),
                 };

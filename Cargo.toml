@@ -7,7 +7,7 @@ license = "MIT/Apache-2.0"
 name = "aria2-rs"
 readme = "README.md"
 repository = "https://github.com/ihciah/aria2-rs"
-version = "0.2.0"
+version = "0.2.1"
 
 [dependencies]
 tokio = { version = "1", features = ["sync", "time", "macros", "rt"] }
@@ -24,7 +24,7 @@ base64 = "0.21"
 tracing = "0.1"
 
 smallvec = { version = "1", features = ["serde"] }
-small-map = { version = "0.1", features = ["fxhash", "serde"] }
+small-map = { version = "0.1.3", features = ["fxhash", "serde"] }
 smol_str = { version = "0.2", features = ["serde"] }
 
 [dev-dependencies]

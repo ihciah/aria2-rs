@@ -33,7 +33,7 @@ pub enum StatusKey {
 }
 
 #[serde_with::serde_as]
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct Status {
     pub gid: Option<SmolStr>,
@@ -70,7 +70,7 @@ pub struct Status {
     pub bittorrent: Option<BittorrentStatus>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[serde(rename_all = "camelCase")]
 #[repr(u8)]
 pub enum TaskStatus {
@@ -104,7 +104,7 @@ pub struct Uri {
     pub status: UriStatus,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub enum UriStatus {
     Used,
@@ -112,7 +112,7 @@ pub enum UriStatus {
 }
 
 #[serde_with::serde_as]
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct BittorrentStatus {
     pub announce_list: Vec<Vec<String>>,
@@ -123,7 +123,7 @@ pub struct BittorrentStatus {
     pub info: Option<BittorrentInfo>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum BitTorrentMode {
     Single,
