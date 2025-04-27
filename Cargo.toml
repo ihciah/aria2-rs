@@ -7,11 +7,11 @@ license = "MIT/Apache-2.0"
 name = "aria2-rs"
 readme = "README.md"
 repository = "https://github.com/ihciah/aria2-rs"
-version = "0.2.1"
+version = "0.3.0"
 
 [dependencies]
 tokio = { version = "1", features = ["sync", "time", "macros", "rt"] }
-tokio-tungstenite = { version = "0.21", features = ["rustls-tls-webpki-roots"] }
+tokio-tungstenite = { version = "0.26", features = ["rustls-tls-webpki-roots"] }
 futures-util = { version = "0.3", features = ["sink"] }
 
 parking_lot = { version = "0.12", features = ["hardware-lock-elision"] }
@@ -20,12 +20,12 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_with = "3"
 thiserror = "1"
-base64 = "0.21"
+base64 = "0.22"
 tracing = "0.1"
 
 smallvec = { version = "1", features = ["serde"] }
 small-map = { version = "0.1.3", features = ["fxhash", "serde"] }
-smol_str = { version = "0.2", features = ["serde"] }
+smol_str = { version = "0.3", features = ["serde"] }
 
 [dev-dependencies]
 tokio = { version = "1", features = [

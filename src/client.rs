@@ -121,7 +121,7 @@ impl RawClient {
                                 break;
                             }
                         };
-                        Self::handle_response(text, &mut handler_mapping, &cb);
+                        Self::handle_response(text.to_string(), &mut handler_mapping, &cb);
                     }
                 }
             }
@@ -178,7 +178,7 @@ impl RawClient {
             method,
             params: call,
         };
-        sink.send(WSMessgae::Text(serde_json::to_string(&rpc_req)?))
+        sink.send(WSMessgae::Text(serde_json::to_string(&rpc_req)?.into()))
             .await?;
         Ok(())
     }
@@ -248,7 +248,7 @@ impl RawClient {
 
     pub async fn call<'a, C: Call + Reply>(&'a self, call: &'a C) -> Result<C::Reply> {
         let value = self.call_value(call).await?;
-        let reply = C::to_reply(value).map_err(Error::from)?;
+        let reply = C::to_reply(value)?;
         Ok(reply)
     }
 }
@@ -328,7 +328,7 @@ impl BatchClient {
 
     pub async fn call_instantly<'a, C: Call + Reply>(&'a self, call: &'a C) -> Result<C::Reply> {
         let value = self.inner.call_value(call).await?;
-        let reply = C::to_reply(value).map_err(Error::from)?;
+        let reply = C::to_reply(value)?;
         Ok(reply)
     }
 
@@ -338,7 +338,7 @@ impl BatchClient {
 
     pub async fn call<C: Call + Reply + Send + Sync + 'static>(&self, call: C) -> Result<C::Reply> {
         let value = self.call_value(call).await?;
-        let reply = C::to_reply(value).map_err(Error::from)?;
+        let reply = C::to_reply(value)?;
         Ok(reply)
     }
 

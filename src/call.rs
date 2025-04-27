@@ -82,11 +82,11 @@ pub struct AddTorrentCall<'a> {
     pub options: Option<TaskOptions>,
 }
 
-impl<'a> Reply for AddTorrentCall<'a> {
+impl Reply for AddTorrentCall<'_> {
     type Reply = GidReply;
 }
 
-impl<'a> Call for AddTorrentCall<'a> {
+impl Call for AddTorrentCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.addTorrent"
     }
@@ -111,11 +111,11 @@ pub struct AddMetalinkCall<'a> {
     pub options: Option<TaskOptions>,
 }
 
-impl<'a> Reply for AddMetalinkCall<'a> {
+impl Reply for AddMetalinkCall<'_> {
     type Reply = Vec<GidReply>;
 }
 
-impl<'a> Call for AddMetalinkCall<'a> {
+impl Call for AddMetalinkCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.addMetalink"
     }
@@ -135,7 +135,7 @@ pub struct RemoveCall<'a> {
     pub gid: Cow<'a, str>,
 }
 
-impl<'a> Reply for RemoveCall<'a> {
+impl Reply for RemoveCall<'_> {
     type Reply = GidReply;
 }
 
@@ -158,11 +158,11 @@ pub struct ForceRemoveCall<'a> {
     pub gid: Cow<'a, str>,
 }
 
-impl<'a> Reply for ForceRemoveCall<'a> {
+impl Reply for ForceRemoveCall<'_> {
     type Reply = GidReply;
 }
 
-impl<'a> Call for ForceRemoveCall<'a> {
+impl Call for ForceRemoveCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.forceRemove"
     }
@@ -181,11 +181,11 @@ pub struct PauseCall<'a> {
     pub gid: Cow<'a, str>,
 }
 
-impl<'a> Reply for PauseCall<'a> {
+impl Reply for PauseCall<'_> {
     type Reply = GidReply;
 }
 
-impl<'a> Call for PauseCall<'a> {
+impl Call for PauseCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.pause"
     }
@@ -204,11 +204,11 @@ pub struct ForcePauseCall<'a> {
     pub gid: Cow<'a, str>,
 }
 
-impl<'a> Reply for ForcePauseCall<'a> {
+impl Reply for ForcePauseCall<'_> {
     type Reply = GidReply;
 }
 
-impl<'a> Call for ForcePauseCall<'a> {
+impl Call for ForcePauseCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.forcePause"
     }
@@ -227,11 +227,11 @@ pub struct UnpauseCall<'a> {
     pub gid: Cow<'a, str>,
 }
 
-impl<'a> Reply for UnpauseCall<'a> {
+impl Reply for UnpauseCall<'_> {
     type Reply = GidReply;
 }
 
-impl<'a> Call for UnpauseCall<'a> {
+impl Call for UnpauseCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.unpause"
     }
@@ -251,11 +251,11 @@ pub struct TellStatusCall<'a> {
     pub keys: SmallVec<crate::status::StatusKey>,
 }
 
-impl<'a> Reply for TellStatusCall<'a> {
+impl Reply for TellStatusCall<'_> {
     type Reply = crate::status::Status;
 }
 
-impl<'a> Call for TellStatusCall<'a> {
+impl Call for TellStatusCall<'_> {
     fn method(&self) -> &'static str {
         "aria2.tellStatus"
     }
@@ -429,7 +429,7 @@ impl<'de> Deserialize<'de> for MultiResponse {
     }
 }
 
-impl<'a> Reply for MultiCall<'a> {
+impl Reply for MultiCall<'_> {
     type Reply = MultiResponse;
 }
 
@@ -442,7 +442,7 @@ impl<'a> MultiCall<'a> {
     }
 }
 
-impl<'a> Call for MultiCall<'a> {
+impl Call for MultiCall<'_> {
     fn method(&self) -> &'static str {
         "system.multicall"
     }
